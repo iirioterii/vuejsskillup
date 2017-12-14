@@ -9,6 +9,7 @@
         <div class="nav-list">
           <router-link to="/" class="nav-link">Home</router-link>
           <router-link to="/articles" class="nav-link">Articles</router-link>
+          <router-link to="/login" class="nav-link"><i class="fa fa-sign-out"></i></router-link>
         </div>
       </nav>
     </header>
