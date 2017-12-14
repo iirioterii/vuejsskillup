@@ -1,0 +1,27 @@
+.nav {
+  display: block;
+  height: 100%;
+}
+.nav-list {
+  display: flex;
+}
+.nav-link {
+  padding: 10px;
+  height: 100%;
+  line-height: 40px;
+  display: block;
+  transition: .3s ease;
+  &:hover {
+    background-color: $light-grey;
+  }
+}
+.nav-icon {
+  font-size: 24px;
+}
+.router-link-exact-active {
+  color: $green;
+  cursor: default;
+  &:hover {
+    background-color: transparent;
+  }
+}
