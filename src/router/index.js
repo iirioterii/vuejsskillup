@@ -5,6 +5,9 @@ import Notifications from 'vue-notification';
 import HelloWorld from '@/components/HelloWorld';
 import Login from '@/components/Login';
 // import auth from '@/services/auth';
+import Home from '@/components/Home';
+import ArticleList from '@/components/ArticleList';
+import NotFoundComponent from '@/components/NotFoundComponent';
 
 // Check the users auth status when the app starts
 // auth.checkAuth();
@@ -18,8 +21,13 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: HelloWorld,
+      component: Home,
+      sidebar: true,
+    },
+    {
+      path: '/articles',
+      component: ArticleList,
+      sidebar: false,
     },
     {
       path: '/login',
@@ -33,7 +41,7 @@ export default new Router({
     },
     {
       path: '*',
-      redirect: '/',
+      component: NotFoundComponent,
     },
   ],
 });
