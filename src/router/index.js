@@ -5,6 +5,9 @@ import Notifications from 'vue-notification';
 import HelloWorld from '@/components/HelloWorld';
 import Login from '@/components/Login';
 import { requireAuth, redirectIfLogged } from '@/services/auth';
+import Home from '@/components/Home';
+import ArticleList from '@/components/ArticleList';
+import NotFoundComponent from '@/components/NotFoundComponent';
 
 Vue.use(VeeValidate);
 Vue.use(Router);
@@ -17,7 +20,13 @@ export default new Router({
       path: '/',
       name: 'home',
       beforeEnter: requireAuth,
-      component: HelloWorld,
+      component: Home,
+      sidebar: true,
+    },
+    {
+      path: '/articles',
+      component: ArticleList,
+      sidebar: false,
     },
     {
       path: '/login',
@@ -32,7 +41,7 @@ export default new Router({
     },
     {
       path: '*',
-      redirect: '/',
+      component: NotFoundComponent,
     },
   ],
 });

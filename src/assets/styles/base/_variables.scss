@@ -1,0 +1,67 @@
+//colors
+$orange: #f07100;
+$orange-light: #ff851b;
+$blue: #2398fc;
+$red: #f03232;
+$dark-red: #cb1e20;
+$green: #11b159;
+$light-grey: #d7d7d7;
+$grey: #8e8e8e;
+$dark-grey: #545f65;
+$black: #3d2314;
+$blue-grey: #eef1f6;
+$yellow: #f7ba2a;
+
+//themes
+$theme-purple: #9116be;
+$theme-red: #ff4948;
+$theme-green: #47bb15;
+$theme-orange: #f87700;
+$theme-dark-green: #03868b;
+$theme-dark-blue: #2781d4;
+$theme-blue: #0eb8ff;
+$theme-dark-purple: #692383;
+
+$theme-purple-hover: #5c1d73;
+$theme-red-hover: #e94140;
+$theme-green-hover: #42ab15;
+$theme-orange-hover: #f07100;
+$theme-blue-hover: #2271ba;
+$theme-dark-green-hover: #037479;
+
+//font-family
+$font-family: 'Roboto', sans-serif;
+
+// breakpoint
+$breakpoint-xs-min: 320px;
+$breakpoint-sm-min: 768px;
+$breakpoint-md-min: 980px;
+$breakpoint-rg-min: 1200px;
+$breakpoint-lg-min: 1562px;
+$breakpoint-xl-min: 1680px;
+
+$breakpoint-xs-max: $breakpoint-sm-min - 1px;
+$breakpoint-sm-max: $breakpoint-md-min - 1px;
+$breakpoint-md-max: $breakpoint-rg-min - 1px;
+$breakpoint-rg-max: $breakpoint-lg-min - 1px;
+$breakpoint-lg-max: $breakpoint-xl-min - 1px;
+$breakpoint-xl-max: 1920px;
+
+//widths
+$sidebarWidth: 236px;
+$containerWidth: 1200px;
+$col-count: 12;
+
+// Font Sizes
+$font-size: 15px !default;
+$font-size-focus: 12px !default;
+
+// Colors
+$input-color: $dark-grey !default;
+$border-color: $grey !default;
+$label-color: $grey !default;
+$focus-color: $blue !default;
+$error-color: $red !default;
+
+// Animation
+$mf-transition-speed: 0.2s !default;
