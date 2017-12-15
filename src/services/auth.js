@@ -13,7 +13,7 @@ export function getJWTToken() {
 
 export function logout() {
   clearJWTToken();
-  router.push('/');
+  router.push('/login');
 }
 
 export function setJWTToken(jwtToken) {

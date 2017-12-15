@@ -40,7 +40,7 @@
         <button class="btn btn-primary" type="submit">Login</button>
       </div>
     </form>
-    <Loader v-show="loading"></Loader>
+    <loader v-show="loading"></loader>
   </div>
 </template>
 
