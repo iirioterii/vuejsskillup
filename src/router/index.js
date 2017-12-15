@@ -4,10 +4,7 @@ import Router from 'vue-router';
 import Notifications from 'vue-notification';
 import HelloWorld from '@/components/HelloWorld';
 import Login from '@/components/Login';
-// import auth from '@/services/auth';
-
-// Check the users auth status when the app starts
-// auth.checkAuth();
+import { requireAuth, redirectIfLogged } from '@/services/auth';
 
 Vue.use(VeeValidate);
 Vue.use(Router);
@@ -19,11 +16,13 @@ export default new Router({
     {
       path: '/',
       name: 'home',
+      beforeEnter: requireAuth,
       component: HelloWorld,
     },
     {
       path: '/login',
       name: 'login',
+      beforeEnter: redirectIfLogged,
       component: Login,
     },
     {

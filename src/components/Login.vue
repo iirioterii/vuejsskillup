@@ -45,8 +45,9 @@
 </template>
 
 <script>
-  // import auth from '@/services/auth';
   import Loader from 'vue-simple-spinner';
+  import { login } from '@/services/api';
+  import { setJWTToken } from '@/services/auth';
 
   export default {
     data() {
@@ -66,19 +67,27 @@
           .then((isValid) => {
             if (isValid) {
               this.loading = true;
-
-              setTimeout(
-                () => {
-                  this.$notify({
-                    title: 'Submit',
-                    text: 'Sorry! This is error notification!',
-                    type: 'error',
-                  });
+              const credentials = {
+                email: this.credentials.email,
+                password: this.credentials.password,
+              };
+              login(credentials)
+                .then((response) => {
+                  setJWTToken(response.data.attributes.token);
+                  this.$router.push('/');
+                })
+                .catch((err) => {
                   this.loading = false;
-                },
-                2000,
-              );
-              // auth.login_or_signup('login', this, credentials, '/');
+                  if (err.response.status === 401) {
+                    this.$notify({
+                      title: 'Login failed',
+                      text: 'Sorry! Check your email or password',
+                      type: 'error',
+                    });
+                  }
+                  // Handle errors
+                })
+              ;
             }
           });
       },

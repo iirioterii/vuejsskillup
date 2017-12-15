@@ -1,14 +1,7 @@
-import axios from 'axios';
-import Router from 'vue-router';
+import router from '@/router';
 import decode from 'jwt-decode';
-import { login } from './api';
 
 const JWT_TOKEN_KEY = 'vujsskilluptoken';
-
-
-const router = new Router({
-  mode: 'history',
-});
 
 function clearJWTToken() {
   localStorage.removeItem(JWT_TOKEN_KEY);
@@ -20,12 +13,11 @@ export function getJWTToken() {
 
 export function logout() {
   clearJWTToken();
-  router.go('/');
+  router.push('/');
 }
 
-// Get and store id_token in local storage
 export function setJWTToken(jwtToken) {
-  localStorage.setItem(JWT_TOKEN_KEY, jwtToken);
+  return localStorage.setItem(JWT_TOKEN_KEY, jwtToken);
 }
 
 function getTokenExpirationDate(encodedToken) {
@@ -44,18 +36,22 @@ function isTokenJWTExpired(token) {
 }
 
 export function isLoggedIn() {
-  const idToken = getJWTToken();
-  return !!idToken && !isTokenJWTExpired(idToken);
+  const jwtToken = getJWTToken();
+  return !!jwtToken && !isTokenJWTExpired(jwtToken);
 }
 
 export function requireAuth(to, from, next) {
   if (!isLoggedIn()) {
-    next({
-      path: '/',
-      query: { redirect: to.fullPath },
-    });
+    next('/login');
   } else {
     next();
   }
 }
 
+export function redirectIfLogged(to, from, next) {
+  if (isLoggedIn()) {
+    next('/');
+  } else {
+    next();
+  }
+}
