@@ -33,7 +33,7 @@
           return [];
         },
       },
-      onRemovedClicked: {
+      onRemoveClicked: {
         type: Function,
       },
       onAddClicked: {
@@ -43,57 +43,60 @@
         type: Function,
       },
     },
-    columns: [
-      {
-        prop: 'id',
-        label: 'Id',
-      },
-      {
-        prop: 'title',
-        label: 'Title',
-        show: false,
-      },
-      {
-        prop: 'description',
-        label: 'Description',
-      },
-      {
-        prop: 'created-at',
-        label: 'Created',
-        formatter: formatDate,
-        show: true,
-      },
-    ],
-    tableData: [],
-    actionsDef: {
-      colProps: {
-        span: 1,
-      },
-      def: [
-        {
-          name: 'New',
-          handler: this.onAddClicked,
-        },
-      ],
-    },
-    actionColDef: {
-      label: 'Actions',
-      def: [
-        {
-          handler: this.onEditClicked,
-          buttonProps: {
-            icon: 'el-icon-edit',
-            type: 'success',
+    data() {
+      return {
+        columns: [
+          {
+            prop: 'id',
+            label: 'Id',
           },
-        },
-        {
-          handler: this.onRemoveClicked,
-          buttonProps: {
-            icon: 'el-icon-delete',
-            type: 'danger',
+          {
+            prop: 'title',
+            label: 'Title',
+            show: false,
           },
+          {
+            prop: 'description',
+            label: 'Description',
+          },
+          {
+            prop: 'created-at',
+            label: 'Created',
+            formatter: formatDate,
+            show: true,
+          },
+        ],
+        actionsDef: {
+          colProps: {
+            span: 1,
+          },
+          def: [
+            {
+              name: 'New',
+              handler: this.onAddClicked,
+            },
+          ],
         },
-      ],
+        actionColDef: {
+          label: 'Actions',
+          def: [
+            {
+              handler: this.onEditClicked,
+              buttonProps: {
+                icon: 'el-icon-edit',
+                type: 'success',
+              },
+            },
+            {
+              handler: this.onRemoveClicked,
+              buttonProps: {
+                icon: 'el-icon-delete',
+                type: 'danger',
+              },
+            },
+          ],
+        },
+      };
     },
   };
 </script>

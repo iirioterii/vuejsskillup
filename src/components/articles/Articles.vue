@@ -1,22 +1,15 @@
 <template>
   <div class="articles">
+
     <h1>{{ header }}</h1>
-    <data-tables
-        v-loading="loading"
-        :data="tableData"
-        :actions-def="actionsDef"
-        :action-col-def="actionColDef"
-    >
-      <el-table-column
-          v-for="column in columns"
-          :prop="column.prop"
-          :label="column.label"
-          :key="column.label"
-          :formatter="column.formatter"
-          sortable="custom"
-      >
-      </el-table-column>
-    </data-tables>
+
+    <article-grid
+        :loading="loading"
+        :table-data="tableData"
+        :on-add-clicked="onAddClicked"
+        :on-edit-clicked="onEditClicked"
+        :on-remove-clicked="onRemoveClicked"
+    ></article-grid>
 
     <el-dialog
         :title="getArticleFormTitle"
@@ -40,12 +33,13 @@
 <script>
   import { getArticles, removeArticle, getArticle } from '../../services/api';
   import { getEntitiesDataFromJsonApi, getEntityDataFromJsonApiResponse } from '../../services/normalizers';
-  import { formatDate } from '../../services/tableFormatters';
   import ArticleForm from './ArticleForm';
+  import ArticleGrid from './ArticleGrid';
 
   export default {
     components: {
       ArticleForm,
+      ArticleGrid,
     },
     data() {
       return {
@@ -57,58 +51,7 @@
         articleFormAdd: true,
         articleFormVisible: false,
         loading: false,
-        columns: [
-          {
-            prop: 'id',
-            label: 'Id',
-          },
-          {
-            prop: 'title',
-            label: 'Title',
-            show: false,
-          },
-          {
-            prop: 'description',
-            label: 'Description',
-          },
-          {
-            prop: 'created-at',
-            label: 'Created',
-            formatter: formatDate,
-            show: true,
-          },
-        ],
         tableData: [],
-        actionsDef: {
-          colProps: {
-            span: 1,
-          },
-          def: [
-            {
-              name: 'New',
-              handler: this.onAddClicked,
-            },
-          ],
-        },
-        actionColDef: {
-          label: 'Actions',
-          def: [
-            {
-              handler: this.onEditClicked,
-              buttonProps: {
-                icon: 'el-icon-edit',
-                type: 'success',
-              },
-            },
-            {
-              handler: this.onRemoveClicked,
-              buttonProps: {
-                icon: 'el-icon-delete',
-                type: 'danger',
-              },
-            },
-          ],
-        },
       };
     },
     computed: {
