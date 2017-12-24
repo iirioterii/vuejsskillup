@@ -19,7 +19,7 @@
 </template>
 
 <script>
-  import { formatDate } from '../../services/tableFormatters';
+  import { formatAuthor, formatDate } from '../../services/tableFormatters';
 
   export default {
     name: 'article-grid',
@@ -53,17 +53,20 @@
           {
             prop: 'title',
             label: 'Title',
-            show: false,
           },
           {
             prop: 'description',
             label: 'Description',
           },
           {
+            prop: 'user',
+            label: 'Author',
+            formatter: formatAuthor,
+          },
+          {
             prop: 'created-at',
             label: 'Created',
             formatter: formatDate,
-            show: true,
           },
         ],
         actionsDef: {

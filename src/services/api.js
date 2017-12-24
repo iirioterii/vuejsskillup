@@ -23,7 +23,7 @@ export const getUsers = () => {
 };
 
 export const getArticles = () => {
-  const url = `${BASE_URL}/api/v1/articles`;
+  const url = `${BASE_URL}/api/v1/articles?include=users`;
   return http.get(url, getJsonApiConfig()).then(response => response.data);
 };
 

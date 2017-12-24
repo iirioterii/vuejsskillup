@@ -32,7 +32,7 @@
 
 <script>
   import { getArticles, removeArticle, getArticle } from '../../services/api';
-  import { getEntitiesDataFromJsonApi, getEntityDataFromJsonApiResponse } from '../../services/normalizers';
+  import { getArticlesDataFromJsonApi, getEntityDataFromJsonApiResponse } from '../../services/normalizers';
   import ArticleForm from './ArticleForm';
   import ArticleGrid from './ArticleGrid';
 
@@ -95,7 +95,7 @@
                 if (err.response.status === 403) {
                   this.$notify({
                     title: 'Remove failed',
-                    text: 'Sorry! Check your not enough permissions',
+                    text: 'Sorry! You don\'t have enough permissions',
                     type: 'error',
                   });
                 }
@@ -132,7 +132,7 @@
     mounted() {
       this.loading = true;
       getArticles()
-        .then(response => this.tableData = getEntitiesDataFromJsonApi(response.data))
+        .then(response => this.tableData = getArticlesDataFromJsonApi(response))
         .finally(() => this.loading = false);
     },
   };

@@ -1,11 +1,19 @@
-export function getEntitiesDataFromJsonApi(data) {
-  if (!Array.isArray(data)) {
+export function getArticlesDataFromJsonApi(response) {
+  const data = response.data;
+  const included = response.included;
+
+  if (!Array.isArray(response.data)) {
     throw new Error('Data must be an array');
   }
+
+  const getUserById = id => included.find(user => id === user.id);
+
   return data.map((item) => {
-    const attrWithId = item.attributes;
-    attrWithId.id = item.id;
-    return attrWithId;
+    const dataWithIdAndUser = item.attributes;
+    dataWithIdAndUser.id = item.id;
+    dataWithIdAndUser.user = getUserById(item.relationships.user.data.id);
+
+    return dataWithIdAndUser;
   });
 }
 
