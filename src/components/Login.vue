@@ -1,6 +1,5 @@
 <template>
-  <div class="pos-rel">
-    <form v-on:submit.prevent="validateBeforeSubmit">
+    <form v-loading="loading" v-on:submit.prevent="validateBeforeSubmit">
       <div class="panel">
         <h2 class="title-1">Log In</h2>
         <p class="sub-title-1">Log in to your account</p>
@@ -37,15 +36,12 @@
           <i v-show="errors.has('password')" class="fa fa-warning"></i>
           <span v-show="errors.has('password')" class="help is-danger">{{ errors.first('password') }}</span>
         </div>
-        <button class="btn btn-primary" type="submit">Login</button>
+        <button :disabled="isFormInvalid" class="btn btn-primary" type="submit">Login</button>
       </div>
     </form>
-    <loader v-show="loading"></loader>
-  </div>
 </template>
 
 <script>
-  import Loader from 'vue-simple-spinner';
   import { login } from '@/services/api';
   import { setJWTToken } from '@/services/auth';
 
@@ -59,6 +55,11 @@
         error: '',
         loading: false,
       };
+    },
+    computed: {
+      isFormInvalid() {
+        return Object.keys(this.veeFields).some(key => this.veeFields[key].invalid);
+      },
     },
     methods: {
       validateBeforeSubmit() {
@@ -91,9 +92,6 @@
             }
           });
       },
-    },
-    components: {
-      Loader,
     },
   };
 </script>

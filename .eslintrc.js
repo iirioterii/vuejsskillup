@@ -24,6 +24,8 @@ module.exports = {
   },
   // add your custom rules here
   rules: {
+    "no-return-assign": 0,
+    "import/prefer-default-export": 0,
     // don't require .vue extension when importing
     'import/extensions': ['error', 'always', {
       js: 'never',

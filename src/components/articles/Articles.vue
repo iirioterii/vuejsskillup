@@ -1,0 +1,200 @@
+<template>
+  <div class="articles">
+    <h1>{{ header }}</h1>
+    <data-tables
+        v-loading="loading"
+        :data="tableData"
+        :actions-def="actionsDef"
+        :action-col-def="actionColDef"
+    >
+      <el-table-column
+          v-for="column in columns"
+          :prop="column.prop"
+          :label="column.label"
+          :key="column.label"
+          :formatter="column.formatter"
+          sortable="custom"
+      >
+      </el-table-column>
+    </data-tables>
+
+    <el-dialog
+        :title="getArticleFormTitle"
+        :visible.sync="articleFormVisible"
+        v-if="articleFormVisible"
+        width="30%"
+        :before-close="handleClose"
+    >
+      <article-form
+          :on-submit-success="onSubmitSuccess"
+          :id="id"
+          :title="title"
+          :description="description"
+          :text="text"
+          :add="articleFormAdd"
+      ></article-form>
+    </el-dialog>
+  </div>
+</template>
+
+<script>
+  import { getArticles, removeArticle, getArticle } from '../../services/api';
+  import { getEntitiesDataFromJsonApi, getEntityDataFromJsonApiResponse } from '../../services/normalizers';
+  import { formatDate } from '../../services/tableFormatters';
+  import ArticleForm from './ArticleForm';
+
+  export default {
+    components: {
+      ArticleForm,
+    },
+    data() {
+      return {
+        title: '',
+        description: '',
+        text: '',
+        id: '',
+        header: 'Articles',
+        articleFormAdd: true,
+        articleFormVisible: false,
+        loading: false,
+        columns: [
+          {
+            prop: 'id',
+            label: 'Id',
+          },
+          {
+            prop: 'title',
+            label: 'Title',
+            show: false,
+          },
+          {
+            prop: 'description',
+            label: 'Description',
+          },
+          {
+            prop: 'created-at',
+            label: 'Created',
+            formatter: formatDate,
+            show: true,
+          },
+        ],
+        tableData: [],
+        actionsDef: {
+          colProps: {
+            span: 1,
+          },
+          def: [
+            {
+              name: 'New',
+              handler: this.onAddClicked,
+            },
+          ],
+        },
+        actionColDef: {
+          label: 'Actions',
+          def: [
+            {
+              handler: this.onEditClicked,
+              buttonProps: {
+                icon: 'el-icon-edit',
+                type: 'success',
+              },
+            },
+            {
+              handler: this.onRemoveClicked,
+              buttonProps: {
+                icon: 'el-icon-delete',
+                type: 'danger',
+              },
+            },
+          ],
+        },
+      };
+    },
+    computed: {
+      getArticleFormTitle() {
+        if (this.articleFormAdd) {
+          return 'New Article';
+        }
+        return 'Edit Article';
+      },
+    },
+    methods: {
+      onSubmitSuccess(article) {
+        this.articleFormVisible = false;
+        this.loading = true;
+        if (this.articleFormAdd) {
+          this.tableData.push(getEntityDataFromJsonApiResponse(article));
+        } else {
+          this.tableData = this.tableData.map((item) => {
+            if (item.id === this.id) {
+              return getEntityDataFromJsonApiResponse(article);
+            }
+            return item;
+          });
+        }
+        this.loading = false;
+      },
+      onRemoveClicked(row) {
+        this.$confirm('Are you sure to remove article?')
+          .then(() => {
+            this.loading = true;
+            removeArticle(row.id)
+              .then(() => {
+                this.tableData = this.tableData.filter(item => (item.id !== row.id));
+                this.$notify({
+                  title: 'Remove successfully',
+                  text: 'You are successfully removed article',
+                  type: 'success',
+                });
+              })
+              .catch((err) => {
+                if (err.response.status === 403) {
+                  this.$notify({
+                    title: 'Remove failed',
+                    text: 'Sorry! Check your not enough permissions',
+                    type: 'error',
+                  });
+                }
+                // Handle errors
+              })
+              .finally(() => this.loading = false);
+          })
+          .catch(() => {});
+      },
+      onEditClicked(row) {
+        this.id = row.id;
+        this.articleFormAdd = false;
+        this.loading = true;
+        getArticle(row.id)
+          .then((article) => {
+            this.title = article.data.attributes.title;
+            this.description = article.data.attributes.description;
+            this.text = article.data.attributes.text;
+            this.articleFormVisible = true;
+          })
+          .finally(() => this.loading = false);
+      },
+      onAddClicked() {
+        this.articleFormVisible = true;
+      },
+      handleClose(done) {
+        this.title = '';
+        this.description = '';
+        this.text = '';
+        this.articleFormAdd = true;
+        done();
+      },
+    },
+    mounted() {
+      this.loading = true;
+      getArticles()
+        .then(response => this.tableData = getEntitiesDataFromJsonApi(response.data))
+        .finally(() => this.loading = false);
+    },
+  };
+
+</script>
+
+<style>
+</style>
