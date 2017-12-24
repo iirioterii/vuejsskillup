@@ -1,6 +1,7 @@
 <template>
-  <div class="home">
+  <div class="page-container">
     <AppHeader></AppHeader>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -8,7 +9,6 @@
   import AppHeader from './AppHeader';
 
   export default {
-    methods: {},
     components: { AppHeader },
   };
 </script>

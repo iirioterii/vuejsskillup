@@ -1,32 +1,29 @@
 import Vue from 'vue';
-import VeeValidate from 'vee-validate';
 import Router from 'vue-router';
-import Notifications from 'vue-notification';
 import HelloWorld from '@/components/HelloWorld';
 import Login from '@/components/Login';
 import { requireAuth, redirectIfLogged } from '@/services/auth';
-import Home from '@/components/Home';
-import ArticleList from '@/components/ArticleList';
+import PageContainer from '@/components/PageContainer';
+import Articles from '@/components/articles/Articles';
 import NotFoundComponent from '@/components/NotFoundComponent';
 
-Vue.use(VeeValidate);
 Vue.use(Router);
-Vue.use(Notifications);
 
 export default new Router({
   mode: 'history',
   routes: [
     {
       path: '/',
-      name: 'home',
+      redirect: { path: '/articles' },
       beforeEnter: requireAuth,
-      component: Home,
-      sidebar: true,
-    },
-    {
-      path: '/articles',
-      component: ArticleList,
-      sidebar: false,
+      component: PageContainer,
+      children: [
+        {
+          path: '/articles',
+          component: Articles,
+          beforeEnter: requireAuth,
+        },
+      ],
     },
     {
       path: '/login',
