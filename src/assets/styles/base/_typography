@@ -1,0 +1,14 @@
+.title-1 {
+  font-weight: normal;
+  font-size: 24px;
+}
+
+.title-2 {
+  font-weight: normal;
+  font-size: 20px;
+}
+
+.sub-title-1 {
+  font-weight: normal;
+  font-size: 14px;
+}
