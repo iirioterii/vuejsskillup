@@ -6,6 +6,7 @@
     <nav class="nav">
       <div class="nav-list">
         <router-link to="/articles" class="nav-link">Articles</router-link>
+        <router-link to="/profile" class="nav-link">Profile</router-link>
         <span v-on:click="onLogoutClicked" class="nav-link"><i class="fa fa-sign-out nav-icon"></i></span>
       </div>
     </nav>

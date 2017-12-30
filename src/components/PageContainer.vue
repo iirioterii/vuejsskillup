@@ -1,7 +1,9 @@
 <template>
   <div class="page-container">
     <AppHeader></AppHeader>
-    <router-view></router-view>
+    <div class="page-content">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
@@ -14,7 +16,12 @@
 </script>
 
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-}
+  h1, h2 {
+    font-weight: normal;
+  }
+
+  .page-content {
+    margin: 20px;
+  }
+
 </style>

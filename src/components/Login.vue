@@ -1,44 +1,55 @@
 <template>
+  <div class="login-container">
     <form v-loading="loading" v-on:submit.prevent="validateBeforeSubmit">
       <div class="panel">
-        <h2 class="title-1">Log In</h2>
-        <p class="sub-title-1">Log in to your account</p>
-        <div class="alert alert-danger" v-if="error">
-          <i class="fa fa-frown-o alert-icon"></i>
-          <p>{{ error }}</p>
+
+        <div class="panel-header">
+          <h1 class="title-1">Log In</h1>
+          <h2 class="sub-title-1">Log in to your account</h2>
         </div>
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input
-              id="email"
-              name="email"
-              type="text"
-              class="form-control"
-              placeholder="Enter your email"
-              v-model.trim="credentials.email"
-              v-validate="'required|email|max:255'"
-              :class="{'input': true, 'is-danger': errors.has('email') }"
-          >
-          <i v-show="errors.has('email')" class="fa fa-warning"></i>
-          <span v-show="errors.has('email')" class="help is-danger">{{ errors.first('email') }}</span>
+
+        <div class="panel-body">
+          <div class="form-group">
+            <label class="form-label" for="email">Email</label>
+            <div :class="{'input-group': true, 'has-error': errors.has('email') }">
+              <input
+                  id="email"
+                  name="email"
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter your email"
+                  v-model.trim="credentials.email"
+                  v-validate="'required|email|max:255'"
+              />
+              <i v-show="errors.has('email')" class="fa fa-warning form-err-icon"></i>
+            </div>
+            <span v-show="errors.has('email')" class="form-err-msg">{{ errors.first('email') }}</span>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="password">Password</label>
+            <div :class="{'input-group': true, 'has-error': errors.has('password') }">
+            <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  class="form-control"
+                  placeholder="Enter your password"
+                  v-model.trim="credentials.password"
+                  v-validate="'required|min:8|max:16'"
+              />
+              <i v-show="errors.has('password')" class="fa fa-warning form-err-icon"></i>
+            </div>
+            <span v-show="errors.has('password')" class="form-err-msg">{{ errors.first('password') }}</span>
+          </div>
         </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input
-              id="password"
-              name="password"
-              type="password"
-              class="form-control"
-              placeholder="Enter your password"
-              v-model.trim="credentials.password"
-              v-validate="'required|min:8|max:16'"
-          >
-          <i v-show="errors.has('password')" class="fa fa-warning"></i>
-          <span v-show="errors.has('password')" class="help is-danger">{{ errors.first('password') }}</span>
+
+        <div class="panel-footer">
+          <button :disabled="isFormInvalid" class="btn btn-wide" type="submit">Login</button>
         </div>
-        <button :disabled="isFormInvalid" class="btn btn-primary" type="submit">Login</button>
+
       </div>
     </form>
+  </div>
 </template>
 
 <script>
@@ -52,7 +63,6 @@
           email: '',
           password: '',
         },
-        error: '',
         loading: false,
       };
     },
@@ -97,22 +107,11 @@
 </script>
 
 <style lang="scss" type="text/scss" scoped>
-  $red: #ff1c21;
-
-  .alert {
+  .login-container {
     display: flex;
-    padding: 10px;
-    border: 1px solid;
-    border-radius: 3px;
-    &.alert-danger {
-      color: $red;
-      border-color: $red;
-    }
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
   }
-
-  .alert-icon {
-    font-size: 30px;
-    margin-right: 10px;
-  }
-
 </style>

@@ -1,7 +1,8 @@
 <template>
   <div class="articles">
-
-    <h1>{{ header }}</h1>
+    <div class="title-2">
+      <h1>{{ header }}</h1>
+    </div>
 
     <article-grid
         :loading="loading"
@@ -140,4 +141,7 @@
 </script>
 
 <style>
+  .title-2 {
+    text-align: center;
+  }
 </style>

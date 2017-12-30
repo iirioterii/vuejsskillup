@@ -1,0 +1,21 @@
+.panel {
+  border-radius: 3px;
+  box-shadow: 1px 1px 15px 0 rgba(0,0,0,.25);
+  overflow: hidden;
+  width: 100%;
+}
+
+.panel-header {
+  background-color: $green;
+  color: #fff;
+  padding: 20px 15px;
+}
+
+.panel-body {
+  background-color: $light-grey;
+  padding: 20px 15px;
+}
+
+.panel-footer {
+  padding: 20px 15px;
+}

@@ -1,11 +1,11 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import HelloWorld from '@/components/HelloWorld';
-import Login from '@/components/Login';
-import { requireAuth, redirectIfLogged } from '@/services/auth';
-import PageContainer from '@/components/PageContainer';
-import Articles from '@/components/articles/Articles';
-import NotFoundComponent from '@/components/NotFoundComponent';
+import { requireAuth, redirectIfLogged } from './../services/auth';
+import PageContainer from './../components/PageContainer';
+import Articles from './../components/articles/Articles';
+import NotFoundComponent from './../components/NotFoundComponent';
+import Login from './../components/Login';
+import Profile from './../components/Profile';
 
 Vue.use(Router);
 
@@ -23,6 +23,11 @@ export default new Router({
           component: Articles,
           beforeEnter: requireAuth,
         },
+        {
+          path: '/profile',
+          component: Profile,
+          beforeEnter: requireAuth,
+        },
       ],
     },
     {
@@ -34,7 +39,7 @@ export default new Router({
     {
       path: '/password-reset',
       name: 'password-reset',
-      component: HelloWorld,
+      component: Login,
     },
     {
       path: '*',
