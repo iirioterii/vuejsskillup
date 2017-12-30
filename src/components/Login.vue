@@ -1,8 +1,6 @@
 <template>
   <div class="login-container">
-    <form v-loading="loading" v-on:submit.prevent="validateBeforeSubmit">
-      <div class="panel">
-
+    <form class="panel" v-loading="loading" v-on:submit.prevent="validateBeforeSubmit">
         <div class="panel-header">
           <h1 class="title-1">Log In</h1>
           <h2 class="sub-title-1">Log in to your account</h2>
@@ -47,7 +45,6 @@
           <button :disabled="isFormInvalid" class="btn btn-wide" type="submit">Login</button>
         </div>
 
-      </div>
     </form>
   </div>
 </template>
