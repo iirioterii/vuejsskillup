@@ -7,13 +7,18 @@ import {
   Table,
   TableColumn,
   Pagination,
-  Input,
   Col,
   Row,
   Button,
   Dialog,
   Loading,
   MessageBox,
+  DatePicker,
+  Form,
+  FormItem,
+  Input,
+  Select,
+  Option,
 } from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import lang from 'element-ui/lib/locale/lang/en';
@@ -31,6 +36,11 @@ Vue.use(Dialog);
 Vue.use(Input);
 Vue.use(Loading);
 Vue.use(Button);
+Vue.use(DatePicker);
+Vue.use(Form);
+Vue.use(FormItem);
+Vue.use(Select);
+Vue.use(Option);
 Vue.use(Col);
 Vue.use(Row);
 Vue.use(TableColumn);

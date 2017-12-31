@@ -19,7 +19,17 @@ const getJsonApiConfig = () => ({
 
 export const getUsers = () => {
   const url = `${BASE_URL}/api/v1/users`;
-  return http.get(url).then(response => response.data);
+  return http.get(url, getJsonApiConfig()).then(response => response.data);
+};
+
+export const getMe = () => {
+  const url = `${BASE_URL}/api/v1/users?filter[user]=me`;
+  return http.get(url, getJsonApiConfig()).then(response => response.data);
+};
+
+export const updateUser = (id, data) => {
+  const url = `${BASE_URL}/api/v1/users/${id}`;
+  return http.patch(url, data, postJsonApiConfig()).then(response => response.data);
 };
 
 export const getArticles = () => {

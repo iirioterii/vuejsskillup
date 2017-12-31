@@ -30,6 +30,10 @@ function getTokenExpirationDate(encodedToken) {
   return date;
 }
 
+export function getEncodedJWTToken() {
+  return decode(getJWTToken());
+}
+
 function isTokenJWTExpired(token) {
   const expirationDate = getTokenExpirationDate(token);
   return expirationDate < new Date();

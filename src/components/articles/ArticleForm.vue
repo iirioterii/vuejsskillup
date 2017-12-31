@@ -39,9 +39,6 @@
 </template>
 
 <script>
-  import ElForm from 'element-ui/packages/form/src/form';
-  import ElFormItem from 'element-ui/packages/form/src/form-item';
-  import ElInput from 'element-ui/packages/input/src/input';
   import set from 'lodash/set';
   import { postArticle, updateArticle } from '../../services/api';
 
@@ -82,11 +79,6 @@
           id: this.id,
         },
       };
-    },
-    components: {
-      ElInput,
-      ElFormItem,
-      ElForm,
     },
     methods: {
       validateBeforeSubmit() {
