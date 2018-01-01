@@ -92,6 +92,7 @@
 
 <script>
   import unset from 'lodash/unset';
+  import { formatDateToSave } from '../services/date';
   import { getMe, updateUser } from '../services/api';
   import { getEntityDataFromJsonApiResponse } from '../services/normalizers';
   import { getEncodedJWTToken } from '../services/auth';
@@ -138,6 +139,11 @@
               this.loading = true;
 
               const formData = Object.assign({}, this.$data.formData);
+
+              if (formData.birthday) {
+                formData.birthday = formatDateToSave(formData.birthday);
+              }
+
               const requestData = {
                 data: {
                   id: formData.id,
