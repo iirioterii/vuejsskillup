@@ -95,7 +95,6 @@
   import { formatDateToSave } from '../services/date';
   import { getMe, updateUser } from '../services/api';
   import { getEntityDataFromJsonApiResponse } from '../services/normalizers';
-  import { getEncodedJWTToken } from '../services/auth';
 
   export default {
     name: 'profile',
@@ -126,6 +125,7 @@
           birthday: '',
           gender: '',
         },
+        oldUserEmail: '',
         header: 'Profile',
         loading: false,
       };
@@ -138,28 +138,9 @@
             if (isValid) {
               this.loading = true;
 
-              const formData = Object.assign({}, this.$data.formData);
+              const requestData = this.prepareRequestData(this.$data.formData);
 
-              if (formData.birthday) {
-                formData.birthday = formatDateToSave(formData.birthday);
-              }
-
-              const requestData = {
-                data: {
-                  id: formData.id,
-                  type: 'users',
-                  attributes: formData,
-                },
-              };
-
-              const oldUserEmail = getEncodedJWTToken().user.email;
-              const newUserEmail = formData.email;
-
-              if (oldUserEmail === newUserEmail) {
-                unset(formData, 'email');
-              }
-
-              updateUser(formData.id, requestData)
+              updateUser(requestData.data.id, requestData)
                 .then(() => this.$notify({
                   title: 'Update successfully',
                   text: 'You are successfully updated your profile',
@@ -174,6 +155,28 @@
                 .finally(() => this.loading = false);
             }
           });
+      },
+      prepareRequestData(formData) {
+        const newFormData = Object.assign({}, formData);
+
+        if (newFormData.birthday) {
+          newFormData.birthday = formatDateToSave(newFormData.birthday);
+        }
+
+        const oldUserEmail = this.$data.oldUserEmail;
+        const newUserEmail = newFormData.email;
+
+        if (oldUserEmail === newUserEmail) {
+          unset(newFormData, 'email');
+        }
+
+        return {
+          data: {
+            id: newFormData.id,
+            type: 'users',
+            attributes: newFormData,
+          },
+        };
       },
       getUserInfoFromFacebook() {
         this.loading = true;
@@ -221,7 +224,12 @@
     mounted() {
       this.loading = true;
       getMe()
-        .then(response => this.formData = getEntityDataFromJsonApiResponse(response))
+        .then((response) => {
+          const userData = getEntityDataFromJsonApiResponse(response);
+
+          this.formData = userData;
+          this.oldUserEmail = userData.email;
+        })
         .finally(() => this.loading = false);
     },
     created() {
